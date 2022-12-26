@@ -11,13 +11,14 @@ if (!isset($_SESSION['loggedin'])) {
 require_once "form/config.php";
 
 // We don't have the password or email info stored in sessions so instead we can get the results from the database.
-$stmt = $link->prepare('SELECT password, email FROM user WHERE id = ?');
-// In this case we can use the account ID to get the account info.
-$stmt->bind_param('i', $_SESSION['id']);
-$stmt->execute();
-$stmt->bind_result($password, $email);
-$stmt->fetch();
-$stmt->close();
+$stmt1 = $link->prepare('SELECT password, email, address FROM user WHERE id = ?');
+
+$stmt1->bind_param('i', $_SESSION['id']);
+$stmt1->execute();
+$stmt1->bind_result($password, $email, $address);
+$stmt1->fetch();
+$stmt1->close();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,35 +41,35 @@ $stmt->close();
 </head>
 
 <body class="loggedin">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-inverse">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar  navbar-dark" style="background-color: rgb(37, 59, 49);"">
+        <div class=" container-fluid">
 
-            <a class=" navbar-brand font_title" href="#" onclick="reloadPage()">RBL Register</a>
-
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="nav navbar-nav m-auto">
+        <a class=" navbar-brand font_title" href="#" onclick="reloadPage()">RBL Register</a>
 
 
-                    <li class="nav-item p-2">
-                        <a href="home.php" class="nav-link "><i class="fa fa-home"></i> Home</a>
-                    </li> >
-                    <li class="nav-item p-2">
-                        <a href="form/create.php" class="nav-link "><i class="fab fa-wpforms"></i> Form</a>
-                    </li>
-                    <li class="nav-item p-2">
-                        <a href="profile.php" class="nav-link "><i class="fas fa-user-circle"></i> Profile</a>
-                    </li>
-                    <li class="nav-item p-2">
-                        <a href="logout.php" class="nav-link "><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </li>
-                </ul>
-            </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav navbar-nav m-auto">
+
+
+                <li class="nav-item p-2">
+                    <a href="home.php" class="nav-link "><i class="fa fa-home"></i> Home</a>
+                </li> >
+                <li class="nav-item p-2">
+                    <a href="form/create.php" class="nav-link "><i class="fab fa-wpforms"></i> Form</a>
+                </li>
+                <li class="nav-item p-2">
+                    <a href="profile.php" class="nav-link "><i class="fas fa-user-circle"></i> Profile</a>
+                </li>
+                <li class="nav-item p-2">
+                    <a href="logout.php" class="nav-link "><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
         </div>
     </nav>
     <div class="content">
@@ -92,6 +93,12 @@ $stmt->close();
                     <td>Email:</td>
                     <td>
                         <?= $email ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td>
+                        <?= $address ?>
                     </td>
                 </tr>
             </table>

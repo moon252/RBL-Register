@@ -23,7 +23,9 @@ $file_name_err = $file_type_err = $from_address_err = $to_address_err = $date_er
 
 
 // Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["id"]) && !empty($_POST["id"])) {
+    // Get hidden input value
+    $id = $_POST["id"];
     // Validate name
     $input_file_name = trim($_POST["file_name"]);
     if (empty($input_file_name)) {
@@ -64,18 +66,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check input errors before inserting in database
     if (empty($file_name_err) && empty($file_type_err) && empty($from_address_err) && empty($to_address_err) && empty($date_err)) {
 
-        $sql = "INSERT INTO  `form` (`file_name`, `file_type`, `from_address`, `to_address`, `date`) VALUES (?, ?, ?, ?, ?)";
+        $sql = "UPDATE form SET file_name=?, file_type=?,from_address=?, to_address=?,date=? WHERE Id=?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_file_name, $param_file_type, $param_from_address, $param_to_address, $param_date);
+            mysqli_stmt_bind_param($stmt, "sssssi", $param_file_name, $param_file_type, $param_from_address, $param_to_address, $param_date, $param_id);
 
             $param_file_name = $file_name;
             $param_file_type = $file_type;
             $param_from_address = $from_address;
             $param_to_address = $to_address;
             $param_date = $date;
-
+            $param_id = $id;
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
@@ -100,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id = trim($_GET["id"]);
 
         // Prepare a select statement
-        $sql = "SELECT * FROM form WHERE id = ?";
+        $sql = "SELECT * FROM form WHERE Id = ?";
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "i", $param_id);
@@ -220,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </span>
                         </div>
 
-
+                        <input type="hidden" name="id" value="<?php echo $id; ?>" />
 
 
 

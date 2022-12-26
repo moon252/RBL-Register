@@ -31,24 +31,11 @@ body.loggedin {
 .content>p table td:first-child,
 .content>div table td:first-child {
     font-weight: bold;
-    color: #4a536e;
+    color: #4a5e6e;
     padding-right: 15px;
 }
 
 .content>div p {
     padding: 5px;
     margin: 0 0 10px 0;
-}
-
-.wrapper {
-
-    margin: auto;
-    margin-top: 5px;
-    max-width: 750px;
-    background-color: rgb(100, 170, 220);
-
-}
-
-table tr td:last-child {
-    max-width: 600px;
 }

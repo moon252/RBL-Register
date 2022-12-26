@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($input_file_name)) {
         $file_name_err = "Please enter the file name.";
     } elseif (!filter_var($input_file_name, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z\s]+$/")))) {
-        $file_name_err = "Please enter a valid first name.";
+        $file_name_err = "Please enter a valid file name.";
     } else {
         $file_name = $input_file_name;
     }
@@ -164,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label class="font-weight-bold">Select Where To Send </label>
                             <select class="form-control" name="to_address">
                                 <option>ICT Division, Head Office, RBL</option>
-                                <option>ICT peration, Head Office, RBL</option>
+                                <option>ICT Operation, Head Office, RBL</option>
                                 <option>HR, Head Office, RBL</option>
                             </select>
                         </div>
